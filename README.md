@@ -1,3 +1,5 @@
+#Shopping-cart
+
 ## Project setup
 ```
 npm install

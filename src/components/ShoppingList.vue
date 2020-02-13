@@ -7,7 +7,6 @@
             <div>PRICE: ${{product.cost_in_credits}}</div>
             <div>
               <button class="button" @click="removeFromCart(product)">Remove from cart</button>
-              {{ count }}
               <button  class="button" @click="addToCart(product)">Add to cart</button>
           </div>  
         </div>

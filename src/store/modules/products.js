@@ -42,8 +42,8 @@ export default {
         },
         mutateCartDecrement(state, {id} ) { 
             const final = state.cart.find(item => item.id === id);
-            if (final) {  
-                final.quantity--
+            if (final.quantity>0) {  
+                final.quantity--;
                 state.count-- 
             } 
         },

@@ -6,7 +6,7 @@
             <div>MODEL: {{product.model}}</div>
             <div>PRICE: ${{product.cost_in_credits}}</div>
             <div>
-              <button class="button" @click="removeFromCart(product)">Remove from cart</button>
+              <button class="button" @click="removeFromCart(product)">Remove from cart</button> 
               <button  class="button" @click="addToCart(product)">Add to cart</button>
           </div>  
         </div>

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1 class="title">My first Application</h1>
+    <h1 class="title">Shopping-cart (VueJS + Vuex)</h1>
     <Navigation/>
     <router-view/>
   </div>

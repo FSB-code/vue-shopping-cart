@@ -1,6 +1,6 @@
 <template>
     <div class="shopping">
-      <h2>STAR WARS API Starships Products: <strong id="quantity">{{getNumberOfProducts}}</strong></h2>
+      <h2>STAR WARS API (from <a href="https://swapi.co/">swapi.co</a>) Starships Products: <strong id="quantity">{{getNumberOfProducts}}</strong></h2>
           <div class="shop" v-for="(product,index) in allProducts" :key="index">
             <div>NAME: {{product.name}}</div>
             <div>MODEL: {{product.model}}</div>

@@ -1,5 +1,5 @@
 <template>
-  <div class="cart">
+  <div class="cart" v-if="cartProducts.length">
     <table>
       <thead>
         <tr>
@@ -10,12 +10,12 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(product,index) in products" :key="index">
+        <tr v-for="(product,index) in cartProducts" :key="index">
             <td>{{ index+1 }}</td>
             <td>{{ product.name }}</td>
             <td>${{ product.price }}</td>
             <td>{{ product.quantity }}</td>
-            <td><div><a href="#" id="cross" @click.prevent="removeProduct()"><strong>X</strong></a></div></td>
+            <td class="cross" @click.prevent="deleteProduct()">X</td>
           </tr>
           <tr class="green">
             <td><b>TOTAL:</b></td>
@@ -32,17 +32,15 @@
 import { mapGetters,mapActions } from 'vuex'
 export default {
   computed: {
-    ...mapGetters({
-      products: 'cartProducts'
-    }),
-    total () {
-      return this.products.reduce((total, product) => {
+    ...mapGetters(['cartProducts']),
+    total() {
+      return this.cartProducts.reduce((total, product) => {
         return total + product.price * product.quantity
-      }, 0)
+      },0)
     },
   },
   methods:{
-    ...mapActions(["removeProduct"])
+    ...mapActions(["deleteProduct"])
   }
 }
 </script>
@@ -50,10 +48,9 @@ export default {
 <style>
 table {
   background-color: black;
-  width:100%;
-  height: 500px;
-  border-radius: 100px;
-  border:50px solid black;
+  width: 100%;
+  height: 300px;
+  border: 30px solid black;
 }
 thead {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -65,10 +62,11 @@ thead {
 tbody {
   background-color: white;
 }
-#cross {
+.cross {
   color:#42b983;
   font-size: 25px;
-  text-decoration: none
+  text-decoration: none;
+  cursor: pointer;
 }
 .green {
   background-color: #42b983;

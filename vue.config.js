@@ -1,3 +1,4 @@
 module.exports = {
-    publicPath: '/vue-shopping-cart/'
+  publicPath: '/vue-shopping-cart/',
+  
 }

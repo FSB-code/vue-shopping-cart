@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import ShoppingList from '../components/ShoppingList.vue'
+import ShoppingCart from '../components/ShoppingCart.vue'
 
 Vue.use(VueRouter)
 
@@ -13,11 +14,12 @@ const routes = [
   {
     path: '/cart',
     name: 'ShoppingCart',
-    component: () => import('../components/ShoppingCart.vue')
+    component: ShoppingCart
   }
 ]
 
 const router = new VueRouter({
+  // mode: 'history',
   routes
 })
 

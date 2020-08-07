@@ -1,7 +1,7 @@
 <template>
-    <div id="navig">
-      <router-link to="/">Shopping List</router-link> |
-      <router-link to="/cart">Shopping Cart: <strong id="sum" v-if="itemsInCart >= 0">{{itemsInCart}}</strong></router-link>
+    <div id="navig" >
+        <router-link to="/" >Shopping List</router-link> |
+        <router-link to="/cart">Shopping Cart: <strong id="sum" >{{itemsInCart}}</strong></router-link>
     </div>
 </template>
 
@@ -10,11 +10,10 @@ import { mapGetters } from 'vuex'
 export default {
     name: 'navig',
     computed: {
-      ...mapGetters({
-      cart: 'cartProducts'
-    }),
+    ...mapGetters(['cartProducts','products']),
     itemsInCart(){
-      return this.cart.reduce((accum, item) => accum + item.quantity, 0) 
+      let cart = this.$store.getters.cartProducts;
+      return cart.reduce((accum, item) => accum + item.quantity, 0) 
     },
   }
 }

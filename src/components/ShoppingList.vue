@@ -1,35 +1,54 @@
 <template>
-    <div class="shopping">
-      <h2>STAR WARS API (from <a href="https://swapi.co/">swapi.co</a>) Starships Products: <strong id="quantity">{{getNumberOfProducts}}</strong></h2>
-          <div class="shop" v-for="(product,index) in allProducts" :key="index">
-            <div>NAME: {{product.name}}</div>
-            <div>MODEL: {{product.model}}</div>
-            <div>PRICE: ${{product.cost_in_credits}}</div>
-            <div>
-              <button class="button" @click="removeFromCart(product)">Remove from cart</button> 
-              <button  class="button" @click="addToCart(product)">Add to cart</button>
-          </div>  
-        </div>
+  <div class="shopping-list"> 
+    <v-card>
+      <v-list dark >
+        <v-list-item class="shopping-about">
+          Super Hero (from <a class="ml-1" href="https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json">
+          mdn.github.io/learning-area/javascript/oojs/json/superheroes.json</a>) 
+        </v-list-item>
+        <v-list-item class="shopping-about"> Super Hero Products: <strong id="quantity"> {{numberProducts}}</strong>
+        </v-list-item>
+      </v-list>
+    </v-card>
+    <div class="shop" v-for="(product,i) in products" :key="i">
+      <div >NAME: {{product.name}}</div>
+      <div>PRICE: ${{product.age}}</div>
+      <div>{{product.count}}</div>
+      <div>
+        <v-btn v-if="product.count" @click="removeFromCart(product)" fab dark small color="primary">
+          <v-icon dark>mdi-minus</v-icon>
+        </v-btn> 
+        <v-btn class="ml-4" @click="addToCart(product)" fab dark small color="primary">
+          <v-icon dark>mdi-plus</v-icon>
+        </v-btn>
+      </div>  
     </div>
+  </div>
 </template>
 
 <script>
 import {mapGetters,mapActions} from 'vuex'
 export default {
   name: 'shopping',
-  computed: mapGetters(["allProducts","getNumberOfProducts","cartProducts","count"]),
-  methods: mapActions(["fetchProducts","addToCart","removeFromCart"]),
-  async mounted() {this.fetchProducts()},
+  computed: {
+    ...mapGetters(["products","numberProducts"]),
+  },
+  methods: {
+    ...mapActions(["fetchProducts","addToCart","removeFromCart","getProducts"]),
+  },
+  async mounted() { this.fetchProducts()},
 }
 </script>
 
 <style>
-.shopping {
+.shopping-list {
   background-color: black;
+  
 }
-h2 {
-  color: white;
-}
+.shopping-about {
+    justify-content: center;
+    display: flex;
+  }
 #quantity {
   color: #42b983;
 }
@@ -45,9 +64,6 @@ h2 {
   height: 200px;
   margin: 10px;
   background-color: #42b983;
-}
-.button {
-  background-color: rgb(75, 75, 235);
 }
 .number {
   width:10%;

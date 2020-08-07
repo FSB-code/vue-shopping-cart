@@ -2,68 +2,68 @@ export default {
     state: {
         products: [],
         cart: [],
-        count: 0,
     },
     actions: { 
-        async fetchProducts(context) {
-            const response = await fetch(
-            "https://swapi.co/api/starships/" 
-            );
-            const arrayProducts = await response.json();
-            const fetchProducts = arrayProducts.results.filter((item) => item.cost_in_credits >= 0)
-            context.commit('updateProducts', fetchProducts)
+        async fetchProducts({commit}) {
+            const response = await fetch("https://mdn.github.io/learning-area/javascript/oojs/json/superheroes.json")
+            const products = await response.json();
+            products.members.forEach(item => item.count = 0)
+            commit('UPD_PRODUCTS', products)
         },
-        addToCart(context, product) { 
-            context.commit('mutateCartIncrement', {id: product.length}) 
+        addToCart({commit}, product) { 
+            commit('ADD_PRODUCT', {name: product.name}) 
         }, 
-        removeFromCart(context, product) { 
-            context.commit('mutateCartDecrement', {id: product.length}) 
+        removeFromCart({commit}, product) { 
+            commit('REMOVE_PRODUCT', {name: product.name}) 
         }, 
-        removeProduct(context, product) {
-            context.commit('mutateProductCart', product)
+        deleteProduct({commit}, product) {
+            commit('DELETE_PRODUCT', product)
         },
     },
     mutations: {
-        updateProducts(state,products) {
-            state.products = products
+        UPD_PRODUCTS: (state,products) => {
+            state.products = products.members
         },
-        mutateCartIncrement(state, {id} ) { 
-            const final = state.cart.find(item => item.id === id)
-                if (!final) {
-                    state.cart.push({
-                        id,
-                        quantity: 1,
-                    })
-                    state.count++
-                } else {
-                    final.quantity++
-                    state.count++
-                }
+        ADD_PRODUCT: (state, {name}) => { 
+            const productCount = state.products.find(item => item.name == name)
+            const productInCart = state.cart.find(item => item.name == name)
+            productCount.count++
+            if (!productInCart) {
+                state.cart.push({name, quantity: 1})
+            } else {
+                productInCart.quantity++
+            }
         },
-        mutateCartDecrement(state, {id} ) { 
-            const final = state.cart.find(item => item.id === id);
-            if (final.quantity>0) {  
-                final.quantity--;
-                state.count-- 
+        REMOVE_PRODUCT:(state, {name}) => { 
+            const productCount = state.products.find(item => item.name == name)
+            const productInCart = state.cart.find(item => item.name == name)
+            productCount.count--
+            if (productInCart.quantity) {  
+                productInCart.quantity--;
             } 
         },
-        mutateProductCart(state,product) {
+        DELETE_PRODUCT: (state,product) => {
              state.cart.splice(product, 1)
         }, 
     },
     getters: { 
-        allProducts: state => state.products, 
-        getNumberOfProducts: state => (state.products) ? state.products.length : 0,
+        products: state => state.products.map(product => {
+            return {
+                name: product.name,
+                price: product.age,
+                count: product.count,
+            }
+        }), 
+        numberProducts: state => (state.products) ? state.products.length : 0,
         cartProducts: state => {
-            return state.cart.map(({ id, quantity }) => {
-                const product = state.products.find(item => item.length === id)
+            return state.cart.map(({ name, quantity }) => {
+                const product = state.products.find(item => item.name == name)
                 return {
                     name: product.name,
-                    price: product.cost_in_credits,
+                    price: product.age,
                     quantity,
                 }
             })
         },
-        count: state => state.count,
     }  
 }

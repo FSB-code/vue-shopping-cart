@@ -1,19 +1,20 @@
 <template>
-  <div id="app">
-    <h1 class="title">Shopping-cart (VueJS + Vuex)</h1>
-    <Navigation/>
+  <v-app id="app">
+      <h1 class="title">Shopping-cart (VueJS + Vuex)</h1>
+      <Navigation/>
     <router-view/>
-  </div>
+  </v-app>
 </template>
 
 <script>
-import Navigation from './components/Navigation.vue'
+import Navigation from './components/Navigation';
+
 export default {
-  name: 'app',
+  name: 'App',
   components: {
-  Navigation 
-  }
-}
+    Navigation,
+  },
+};
 </script>
 
 <style>
